@@ -4,6 +4,7 @@
 <head>
 	<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"/>
 <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src *">
+<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'  ">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<script>
 		var condicion = {
@@ -27,7 +28,7 @@
 			var anioSeleccionado = 0;
 			var meses = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
 			var acumuladoVentasMeses = [];
-			$.get("http://187.189.46.56:8181/graficas/ControladorGrafica.php", {opc:'anual'},
+			$.getJSON("http://187.189.46.56:8181/graficas/ControladorGrafica.php", {opc:'anual'},
 				function (data, textStatus, jqXHR) {
 					$.each(data, function (i, item) { 
 						 acumuladoVentasMeses.push({y: (item.TOTAL.toFixed(2)*1), label: item.ANIO,x:item.ANIO})
@@ -50,11 +51,11 @@
 									 	}]	});
 			chart.render();
 					});
-				},
-				"json"
+				}
 			);
 		}
 		
+
 
  		graficaFiltroAnual = function graficaFiltroAnual(e) {
 			 condicion = {
@@ -217,15 +218,14 @@
 			}
 			console.log( statusFamilia)
 			// GRAFICA FAMILIAS ANUAL
-			$.get("http://187.189.46.56:8181/graficas/ControladorGrafica.php", datos,
+			$.getJSON("http://187.189.46.56:8181/graficas/ControladorGrafica.php", datos,
 				function (data, textStatus, jqXHR) {
 					acumuladoVentasMeses = [];
 					$.each(data, function (i, item) {
 						acumuladoVentasMeses.push({ y: item.TOTAL.toFixed(2), label: item.CAMPO, x: item.CAMPO })
 					});
 					creaGraficaPastel(acumuladoVentasMeses, 'charFamilia', "Familias", graficaFiltroFamilia)
-				},
-				"json"
+				}
 			);
 
 			
@@ -254,15 +254,14 @@
 			}
 
 			//GRAFICA ANUAL DE LAS MARCAS
-			$.get("http://187.189.46.56:8181/graficas/ControladorGrafica.php", datos,
+			$.getJSON("http://187.189.46.56:8181/graficas/ControladorGrafica.php", datos,
 				function (data, textStatus, jqXHR) {
 					acumuladoVentasMeses = [];
 					$.each(data, function (i, item) {
 						acumuladoVentasMeses.push({ y: item.TOTAL.toFixed(2), label: item.CAMPO, x: item.CAMPO })
 					});
 					creaGraficaPastel(acumuladoVentasMeses, 'charMarca', "Marcas", graficaFiltroMarca)
-				},
-				"json"
+				}
 			);
 
 			datos.groupField = "almacen";
@@ -270,15 +269,14 @@
 				datos.sucursal = ""
 			}
 			//GRAFICA ANUAL DE LAS SUCURSALES
-			$.get("http://187.189.46.56:8181/graficas/ControladorGrafica.php", datos,
+			$.getJSON("http://187.189.46.56:8181/graficas/ControladorGrafica.php", datos,
 				function (data, textStatus, jqXHR) {
 					acumuladoVentasMeses = [];
 					$.each(data, function (i, item) {
 						acumuladoVentasMeses.push({ y: item.TOTAL.toFixed(2), label: item.CAMPO, x: item.CAMPO })
 					});
 					creaGraficaPastel(acumuladoVentasMeses, 'charSucursal', "Sucursales", graficaFiltroSucursal)
-				},
-				"json"
+				}
 			);
  			datos.groupField = "";
 		}
